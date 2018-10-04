@@ -5,3 +5,17 @@
 div.bodyContainer {
   margin-top: 50px;
 }
+
+.tabs a {
+  color: #64b5f6;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tabs .active {
+  background-color: inherit;
+}
+
+.auth-content {
+  height: 503px;
+}
