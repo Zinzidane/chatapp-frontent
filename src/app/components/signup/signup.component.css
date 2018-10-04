@@ -1,0 +1,28 @@
+#panel {
+  background-color: #fff;
+  padding: 0;
+}
+
+#signupbtn {
+  float: right;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  background-color: #64b5f6;
+  font-weight: 500;
+}
+
+#title {
+  background-color: #64b5f6;
+  color: #fff;
+  padding: 8px;
+  margin-top: 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+form {
+  padding: 0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin: 0 20px 0 20px;
+}
