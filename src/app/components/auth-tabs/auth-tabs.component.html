@@ -5,16 +5,20 @@
         <div class="cards">
           <div class="cards-tabs">
             <ul class="tabs tabs-fixed-width">
-              <li class="tab"><a href="#login">Chat App Login</a></li>
-              <li class="tab"><a class="active" href="#signup">Chat App Sign Up</a></li>
+              <li class="tab"><a href="#login" class="active">Chat App Login</a></li>
+              <li class="tab"><a href="#signup">Chat App Sign Up</a></li>
             </ul>
           </div>
           <div class="card-content">
             <p>Welcome to Chat App!</p>
           </div>
           <div class="card-content">
-            <div id="login" class="col s12">Login</div>
-            <div id="signup" class="col s12">Sign Up</div>
+            <div id="login">
+              <app-login></app-login>
+            </div>
+            <div id="signup">
+              <app-signup></app-signup>
+            </div>
           </div>
         </div>
       </div>
