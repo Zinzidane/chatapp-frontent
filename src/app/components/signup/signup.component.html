@@ -8,7 +8,7 @@
       <div id="errorMsg" *ngIf="errorMessage">
         <span>{{errorMessage}}d</span>
       </div>
-      <form class="col s12" [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
+      <form class="col s12" [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
         <div class="row">
           <div class="input-field col s12">
             <input id="user_name" type="text" formControlName="username">
