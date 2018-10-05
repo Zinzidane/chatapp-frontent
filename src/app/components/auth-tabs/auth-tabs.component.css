@@ -16,6 +16,10 @@ div.bodyContainer {
   background-color: inherit;
 }
 
+.cards {
+  background-color: #fff;
+}
+
 .auth-content {
-  height: 503px;
+  height: 515px;
 }
