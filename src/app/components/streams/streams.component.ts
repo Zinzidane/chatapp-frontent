@@ -12,6 +12,6 @@ export class StreamsComponent implements OnInit {
   constructor(private tokenService: TokenService) { }
 
   ngOnInit() {
-    this.token = this.tokenService.GetToken();
+    this.token = this.tokenService.GetPayload();
   }
 }
