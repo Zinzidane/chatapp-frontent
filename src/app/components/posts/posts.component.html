@@ -1,27 +1,27 @@
-<ul class="collection" *ngFor="let post of posts">
-  <li class="collection-item avatar">
+<ul class="collection">
+  <li class="collection-item avatar" *ngFor="let post of posts">
     <img src="http://placehold.it/50x50" alt="" class="circle">
     <span class="title">{{post.username}}</span>
-    <p class="time">{{post.created}} <br>
+    <p class="time">{{TimeFromNow(post.created)}} <br>
        Country
     </p>
-  </li>
-  <div class="row">
-    <div class="col s12">
-      <div class="card">
-        <div class="card-image">
-          <img class="postImage" src="http://placehold.it/150x150" alt="">
-        </div>
-        <div class="card-content">
-          <p>{{post.post}}</p>
-        </div>
-        <div class="card-action">
-          <i class="material-icons">thumb_up</i>
-          <span class="iconSpan">{{post.totalLikes}}</span>
-          <i class="material-icons">chat</i>
-          <span class="iconSpan">{{post.comments.length}}</span>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-image">
+            <img class="postImage" src="http://placehold.it/150x150" alt="">
+          </div>
+          <div class="card-content">
+            <p>{{post.post}}</p>
+          </div>
+          <div class="card-action">
+            <i class="material-icons">thumb_up</i>
+            <span class="iconSpan">{{post.totalLikes}}</span>
+            <i class="material-icons">chat</i>
+            <span class="iconSpan">{{post.comments.length}}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </li>
 </ul>
