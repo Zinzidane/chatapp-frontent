@@ -9,6 +9,7 @@ import { PostsComponent } from '../components/posts/posts.component';
 import { PostService } from '../services/post.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommentsComponent } from '../components/comments/comments.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent],
+  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent],
   exports: [StreamsComponent, ToolbarComponent],
   providers: [TokenService, PostService]
 })
