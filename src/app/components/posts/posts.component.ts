@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import * as moment from 'moment';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-posts',
@@ -8,12 +9,19 @@ import * as moment from 'moment';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
+  socket: any;
   posts = [];
 
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService) {
+    this.socket = io('http://localhost:3000');
+  }
 
   ngOnInit() {
     this.AllPosts();
+
+    this.socket.on('refreshPage', (data) => {
+      this.AllPosts();
+    });
   }
 
   AllPosts() {
@@ -24,5 +32,9 @@ export class PostsComponent implements OnInit {
 
   TimeFromNow(time) {
     return moment(time).fromNow();
+  }
+
+  LikePost(post) {
+
   }
 }
