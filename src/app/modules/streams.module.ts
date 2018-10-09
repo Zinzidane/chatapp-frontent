@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StreamsComponent } from '../components/streams/streams.component';
 import { TokenService } from '../services/token.service';
@@ -16,7 +17,8 @@ import { CommentsComponent } from '../components/comments/comments.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent],
   exports: [StreamsComponent, ToolbarComponent],
