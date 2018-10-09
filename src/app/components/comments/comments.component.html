@@ -23,7 +23,7 @@
         <li class="collection-item avatar" *ngFor="let comment of commentsArray">
           <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
           <span class="title">{{comment.username}}</span>
-          <p class="time">{{comment.createdAt}}</p>
+          <p class="time">{{TimeFromNow(comment.createdAt)}}</p>
           <p class="postComment">{{comment.comment}}</p>
         </li>
       </ul>

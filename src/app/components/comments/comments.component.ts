@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import io from 'socket.io-client';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-comments',
@@ -39,6 +40,10 @@ export class CommentsComponent implements OnInit, AfterViewInit {
     this.commentForm = this.fb.group({
       comment: ['', Validators.required]
     });
+  }
+
+  TimeFromNow(time) {
+    return moment(time).fromNow();
   }
 
   AddComment() {
