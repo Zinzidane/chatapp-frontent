@@ -15,6 +15,7 @@ export class CommentsComponent implements OnInit, AfterViewInit {
   socket: any;
   commentForm: FormGroup;
   postId: any;
+  post: string;
   commentsArray = [];
 
   constructor(private fb: FormBuilder, private postService: PostService, private route: ActivatedRoute) {
@@ -55,6 +56,7 @@ export class CommentsComponent implements OnInit, AfterViewInit {
 
   GetPost() {
     this.postService.getPost(this.postId).subscribe(data => {
+      this.post = data.post.post;
       this.commentsArray = data.post.comments.reverse();
     })
   }

@@ -40,7 +40,7 @@ export class PostsComponent implements OnInit {
     return moment(time).fromNow();
   }
 
-  CheckInLikesArray(arr, username) {
+  CheckInArray(arr, username) {
     return _.some(arr, {username: username});
   }
 
