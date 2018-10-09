@@ -9,9 +9,9 @@
         <div class="col s12 m12 l10">
           <div class="card postDiv">
             <div class="card-content">
-              <form>
+              <form [formGroup]="commentForm" (ngSubmit)="AddComment()">
                 <div class="formDiv">
-                  <textarea class="materialize-textarea"></textarea>
+                  <textarea formControlName="comment" class="materialize-textarea"></textarea>
                   <button class="btn postBtn">Add Comment</button>
                 </div>
               </form>
