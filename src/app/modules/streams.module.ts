@@ -14,6 +14,7 @@ import { CommentsComponent } from '../components/comments/comments.component';
 import { PeopleComponent } from '../components/people/people.component';
 import { UsersService } from '../services/users.service';
 import { FollowersComponent } from '../components/followers/followers.component';
+import { NotificationsComponent } from '../components/notifications/notifications.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { FollowersComponent } from '../components/followers/followers.component'
     HttpClientModule,
     RouterModule
   ],
-  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent, PeopleComponent, FollowersComponent],
+  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent, PeopleComponent, FollowersComponent, NotificationsComponent],
   exports: [StreamsComponent, ToolbarComponent],
   providers: [TokenService, PostService, UsersService]
 })
