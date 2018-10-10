@@ -33,4 +33,10 @@ export class FollowingComponent implements OnInit {
       console.log(err);
     });
   }
+
+  UnfollowUser(user) {
+    this.usersService.UnfollowUser(user._id).subscribe(data => {
+      this.socket.emit('refresh', {});
+    });
+  }
 }

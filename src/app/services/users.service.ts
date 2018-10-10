@@ -28,4 +28,10 @@ export class UsersService {
       userFollowed: id
     });
   }
+
+  UnfollowUser(id): Observable<any> {
+    return this.http.post(`${BASEURL}/unfollow-user`, {
+      userFollowed: id
+    });
+  }
 }

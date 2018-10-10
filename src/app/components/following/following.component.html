@@ -16,7 +16,7 @@
             <div class="card-action">
               <h3 class="card-title">{{user.userFollowed.username}}</h3>
               <p>Country</p>
-              <button class="btn">Unfollow</button>
+              <button class="btn" (click)="UnfollowUser(user.userFollowed)">Unfollow</button>
             </div>
           </div>
         </div>
