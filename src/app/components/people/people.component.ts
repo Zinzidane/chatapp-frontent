@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import _ from 'lodash';
 import { TokenService } from 'src/app/services/token.service';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-people',
@@ -9,16 +10,24 @@ import { TokenService } from 'src/app/services/token.service';
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
+  socket: any;
   users = [];
   loggedInUser: any;
   userArr = [];
 
-  constructor(private userService: UsersService, private tokenService: TokenService) { }
+  constructor(private userService: UsersService, private tokenService: TokenService) {
+    this.socket = 'http://localhost:3000';
+  }
 
   ngOnInit() {
     this.loggedInUser = this.tokenService.GetPayload();
     this.GetUsers();
     this.GetUser();
+
+    this.socket.on('refreshPage', () => {
+      this.GetUsers();
+      this.GetUser();
+    });
   }
 
   GetUsers() {
@@ -36,7 +45,7 @@ export class PeopleComponent implements OnInit {
 
   FollowUser(user) {
     this.userService.FollowUser(user._id).subscribe(data => {
-
+      this.socket.emit('refresh', {});
     });
   }
 
