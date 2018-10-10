@@ -34,7 +34,11 @@
       <div>Following<i class="material-icons">people</i></div>
     </a>
   </li>
-  <li class="collection-item"><div>Followers<a href="#!" class="secondary-content"><i class="material-icons">people_outline</i></a></div></li>
+  <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/people','followers']" class="secondary-content">
+      <div>Followers<i class="material-icons">people_outline</i></div>
+    </a>
+  </li>
   <li class="collection-item"><div>Photos<a href="#!" class="secondary-content"><i class="material-icons">photo_library</i></a></div></li>
   <li class="collection-item"><div>Notifications<a href="#!" class="secondary-content"><i class="material-icons">alarm</i></a></div></li>
 </ul>

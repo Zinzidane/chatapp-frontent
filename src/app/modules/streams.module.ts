@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommentsComponent } from '../components/comments/comments.component';
 import { PeopleComponent } from '../components/people/people.component';
 import { UsersService } from '../services/users.service';
+import { FollowersComponent } from '../components/followers/followers.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { UsersService } from '../services/users.service';
     HttpClientModule,
     RouterModule
   ],
-  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent, PeopleComponent],
+  declarations: [StreamsComponent, ToolbarComponent, SideComponent, PostFormComponent, PostsComponent, CommentsComponent, PeopleComponent, FollowersComponent],
   exports: [StreamsComponent, ToolbarComponent],
   providers: [TokenService, PostService, UsersService]
 })

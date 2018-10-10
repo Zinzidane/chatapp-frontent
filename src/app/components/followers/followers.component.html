@@ -5,8 +5,8 @@
       <app-side></app-side>
     </div>
     <div class="col s12 m8 l9">
-      <div class="row" *ngIf="following.length > 0">
-        <div class="col s12 m6 l4 cardDiv" *ngFor="let user of following">
+      <div class="row" *ngIf="followers.length > 0">
+        <div class="col s12 m6 l4 cardDiv" *ngFor="let user of followers">
           <div class="card">
             <a>
               <div class="card-image imgDiv">
@@ -14,15 +14,14 @@
               </div>
             </a>
             <div class="card-action">
-              <h3 class="card-title">{{user.userFollowed.username}}</h3>
-              <p>Country</p>
-              <button class="btn" (click)="UnfollowUser(user.userFollowed)">Unfollow</button>
+              <h3 class="card-title">{{user.follower.username}}</h3>
+              <!-- <button class="btn" (click)="UnfollowUser(user.userFollowed)">Unfollow</button> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="row" *ngIf="following.length <= 0">
-        <h4 class="text">You have not followed anyone</h4>
+      <div class="row" *ngIf="followers.length <= 0">
+        <h4 class="text">You have no followers</h4>
       </div>
     </div>
   </div>
