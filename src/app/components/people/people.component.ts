@@ -11,12 +11,14 @@ import { TokenService } from 'src/app/services/token.service';
 export class PeopleComponent implements OnInit {
   users = [];
   loggedInUser: any;
+  userArr = [];
 
   constructor(private userService: UsersService, private tokenService: TokenService) { }
 
   ngOnInit() {
     this.loggedInUser = this.tokenService.GetPayload();
     this.GetUsers();
+    this.GetUser();
   }
 
   GetUsers() {
@@ -26,9 +28,24 @@ export class PeopleComponent implements OnInit {
     }, err => console.log(err));
   }
 
+  GetUser() {
+    this.userService.GetUserById(this.loggedInUser._id).subscribe(data => {
+      this.userArr = data.result.following;
+    }, err => console.log(err));
+  }
+
   FollowUser(user) {
     this.userService.FollowUser(user._id).subscribe(data => {
 
     });
+  }
+
+  CheckInArray(arr, id) {
+    const result = _.find(arr, ['userFollowed._id', id]);
+    if(result) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

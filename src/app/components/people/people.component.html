@@ -16,7 +16,8 @@
             <div class="card-action">
               <h3 class="card-title">{{user.username}}</h3>
               <p>Country</p>
-              <button class="btn" (click)="FollowUser(user)">Follow</button>
+              <button class="btn" *ngIf="!CheckInArray(userArr, user._id)" (click)="FollowUser(user)">Follow</button>
+              <button class="btn disabled" *ngIf="CheckInArray(userArr, user._id)">Following</button>
               <a class="secondary-contetnt">
                 <i class="material-icons">chat</i>
               </a>
