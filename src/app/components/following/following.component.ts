@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { UsersService } from 'src/app/services/users.service';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-following',
@@ -8,14 +9,21 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./following.component.css']
 })
 export class FollowingComponent implements OnInit {
+  socket: any;
   following = [];
   user: any;
 
-  constructor(private tokenService: TokenService, private usersService: UsersService) { }
+  constructor(private tokenService: TokenService, private usersService: UsersService) {
+    this.socket = io('http://localhost:3000');
+  }
 
   ngOnInit() {
     this.user = this.tokenService.GetPayload();
     this.GetUser();
+
+    this.socket.on('refreshPage', () => {
+      this.GetUser();
+    });
   }
 
   GetUser() {
