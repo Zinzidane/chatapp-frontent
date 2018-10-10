@@ -36,4 +36,11 @@ export class NotificationsComponent implements OnInit {
     return moment(time).fromNow();
   }
 
+  MarkNotification(notification) {
+
+  }
+
+  DeleteNotification(notification) {
+
+  }
 }

@@ -13,6 +13,10 @@
             <i class="material-icons">brightness_1</i>
           </a>
           <p class="time">{{TimeFromNow(notification.created)}}</p>
+          <div>
+            <i class="material-icons" (click)="MarkNotification(notification)">check</i>
+            <i class="material-icons" (click)="DeleteNotification(notification)">delete_forever</i>
+          </div>
         </li>
       </ul>
       <ng-template #empty>
