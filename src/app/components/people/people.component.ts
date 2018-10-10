@@ -26,4 +26,9 @@ export class PeopleComponent implements OnInit {
     }, err => console.log(err));
   }
 
+  FollowUser(user) {
+    this.userService.FollowUser(user._id).subscribe(data => {
+
+    });
+  }
 }

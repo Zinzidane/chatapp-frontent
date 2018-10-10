@@ -14,4 +14,10 @@ export class UsersService {
   GetAllUsers(): Observable<any> {
     return this.http.get(`${BASEURL}/users`);
   }
+
+  FollowUser(id): Observable<any> {
+    return this.http.post(`${BASEURL}/follow-user`, {
+      userFollowed: id
+    });
+  }
 }
