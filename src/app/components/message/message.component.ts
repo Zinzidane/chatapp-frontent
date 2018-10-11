@@ -4,6 +4,7 @@ import { TokenService } from 'src/app/services/token.service';
 import { MessageService } from 'src/app/services/message.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import io from 'socket.io-client';
 
 @Component({
   selector: 'app-message',
@@ -15,13 +16,16 @@ export class MessageComponent implements OnInit {
   receiver: any;
   user: any;
   messages = [];
+  socket: any;
 
   constructor(
     private fb: FormBuilder,
     private tokenService: TokenService,
     private usersService: UsersService,
     private messageService: MessageService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      this.socket = io('http://localhost:3000');
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -29,6 +33,10 @@ export class MessageComponent implements OnInit {
     });
     this.user = this.tokenService.GetPayload();
     this.init();
+
+    this.socket.on('refreshPage', () => {
+      this.GetUserByUsername(this.receiver.username);
+    });
   }
 
   init() {
@@ -54,6 +62,7 @@ export class MessageComponent implements OnInit {
   SendMessage() {
     if (this.messageForm.value.message) {
       this.messageService.SendMessage(this.user._id, this.receiver._id, this.receiver.username, this.messageForm.value.message).subscribe(data => {
+        this.socket.emit('refresh', {});
         this.messageForm.reset();
       });
     }
