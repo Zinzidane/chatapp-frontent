@@ -7,12 +7,11 @@
           <i class="fa fa-globe fa-1x badge"></i>
           <span class="nav-label-icon">2</span>
           <ul id="dropdown" class="dropdown-content col s12 collection">
-            <li class="collection-item avatar"><a href="#!">one</a></li>
-            <li class="collection-item avatar"><a href="#!">two</a></li>
-            <li class="collection-item avatar" class="divider" tabindex="-1"></li>
-            <li class="collection-item avatar"><a href="#!">three</a></li>
-            <li class="collection-item avatar"><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-            <li class="collection-item avatar"><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+            <li class="collection-item avatar" *ngFor="let notification of notifications">
+              <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
+              <span>{{notification.message}}</span>
+              <p class="time">{{TimeFromNow(notification.created)}}</p>
+            </li>
           </ul>
         </li>
         <li><a (click)="logout()">Logout</a></li>
