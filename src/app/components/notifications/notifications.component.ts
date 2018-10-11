@@ -28,7 +28,7 @@ export class NotificationsComponent implements OnInit {
 
   GetUser() {
     this.usersService.GetUserById(this.user._id).subscribe(data => {
-      this.notifications = data.result.notifications;
+      this.notifications = data.result.notifications.reverse();
     });
   }
 
@@ -37,10 +37,14 @@ export class NotificationsComponent implements OnInit {
   }
 
   MarkNotification(notification) {
-
+    this.usersService.MarkNotification(notification._id).subscribe(data => {
+      this.socket.emit('refresh', {});
+    });
   }
 
   DeleteNotification(notification) {
-
+    this.usersService.MarkNotification(notification._id, true).subscribe(data => {
+      this.socket.emit('refresh', {});
+    });
   }
 }
