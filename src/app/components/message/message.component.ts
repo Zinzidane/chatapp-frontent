@@ -43,8 +43,10 @@ export class MessageComponent implements OnInit {
   }
 
   SendMessage() {
-    this.messageService.SendMessage(this.user._id, this.receiver._id, this.receiver.username, this.messageForm.value.message).subscribe(data => {
-
-    });
+    if (this.messageForm.value.message) {
+      this.messageService.SendMessage(this.user._id, this.receiver._id, this.receiver.username, this.messageForm.value.message).subscribe(data => {
+        this.messageForm.reset();
+      });
+    }
   }
 }
