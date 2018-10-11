@@ -9,12 +9,27 @@ import * as M from 'materialize-css';
 })
 export class StreamsComponent implements OnInit {
   token: any;
+  streamsTab = false;
+  topStreamsTab = false;
 
   constructor(private tokenService: TokenService) { }
 
   ngOnInit() {
+    this.streamsTab = true;
     this.token = this.tokenService.GetPayload();
     const tabs = document.querySelector('.tabs');
     M.Tabs.init(tabs, {});
+  }
+
+  ChangeTabs(value) {
+    if(value === 'streams') {
+      this.streamsTab = true;
+      this.topStreamsTab = false;
+    }
+
+    if(value === 'top') {
+      this.streamsTab = false;
+      this.topStreamsTab = true;
+    }
   }
 }
