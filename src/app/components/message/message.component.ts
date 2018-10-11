@@ -14,6 +14,7 @@ export class MessageComponent implements OnInit {
   messageForm: FormGroup;
   receiver: any;
   user: any;
+  messages = [];
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +40,14 @@ export class MessageComponent implements OnInit {
   GetUserByUsername(username) {
     this.usersService.GetUserByName(username).subscribe(data => {
       this.receiver = data.result;
+
+      this.GetMessages(this.user._id, data.result._id);
+    });
+  }
+
+  GetMessages(senderId, receiverId) {
+    this.messageService.GetAllMessages(senderId, receiverId).subscribe(data => {
+      this.messages = data.messages.message;
     });
   }
 
