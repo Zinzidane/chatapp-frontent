@@ -2,19 +2,22 @@
   <div class="col s12 m4">
     <a>
       <span>Posts</span>
-      <p class="num">0</p>
+      <p class="num" *ngIf="userData">{{userData.posts.length}}</p>
+      <p class="num" *ngIf="!userData">0</p>
     </a>
   </div>
   <div class="col s12 m4">
     <a>
       <span>Following</span>
-      <p class="num">0</p>
+      <p class="num" *ngIf="userData">{{userData.following.length}}</p>
+      <p class="num" *ngIf="!userData">0</p>
     </a>
   </div>
   <div class="col s12 m4">
     <a>
       <span>Followers</span>
-      <p class="num">0</p>
+      <p class="num" *ngIf="userData">{{userData.followers.length}}</p>
+      <p class="num" *ngIf="!userData">0</p>
     </a>
   </div>
 </div>
