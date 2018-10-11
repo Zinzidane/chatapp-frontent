@@ -9,9 +9,15 @@
           <ul id="dropdown" class="dropdown-content col s12 collection">
             <li class="collection-item avatar" *ngFor="let notification of notifications">
               <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
-              <span>{{notification.message}}</span>
+              <span [ngClass]="notification.read ? 'isRead': 'unread'">{{notification.message}}</span>
               <p class="time">{{TimeFromNow(notification.created)}}</p>
             </li>
+            <li *ngIf="notifications.length <= 0">
+              <p class="text">No notifications yet</p>
+            </li>
+            <p class="secondary-content">
+              <a class="markAll btn" (click)="MarkAll()">Mark all as read</a>
+            </p>
           </ul>
         </li>
         <li><a (click)="logout()">Logout</a></li>
