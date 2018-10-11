@@ -5,7 +5,7 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li class="dropdown-trigger btn" data-traget="dropdown">
           <i class="fa fa-globe fa-1x badge"></i>
-          <span class="nav-label-icon">2</span>
+          <span class="nav-label-icon" *ngIf="count.length > 0">{{count.length}}</span>
           <ul id="dropdown" class="dropdown-content col s12 collection">
             <li class="collection-item avatar" *ngFor="let notification of notifications">
               <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
