@@ -20,6 +20,36 @@
             </p>
           </ul>
         </li>
+        <li class="dropdown-trigger1 dropdown-button" data-traget="dropdown1">
+          <i class="fa fa-bell fa-1x badge"></i>
+          <span class="nav-label-icon" *ngIf="count.length > 0">{{count.length}}</span>
+          <ul id="dropdown" class="dropdown-content col s12 collection">
+            <li class="collection-item avatar" *ngFor="let notification of notifications">
+              <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
+              <span class="title">Username
+                <a class="secondary-content">
+                  Date
+                </a>
+              </span>
+              <p>This is message
+                <a class="secondary-content">
+                  Date
+                  <i class="material-icons">brightness_1</i>
+                </a>
+                <a class="secondary-content">
+                  Date
+                  <i class="material-icons">panorama_fish_eye</i>
+                </a>
+              </p>
+            </li>
+            <li *ngIf="notifications.length <= 0">
+              <p class="text">No notifications yet</p>
+            </li>
+            <p class="secondary-content">
+              <a class="markAll btn" (click)="MarkAll()">Mark all as read</a>
+            </p>
+          </ul>
+        </li>
         <li><a (click)="logout()">Logout</a></li>
       </ul>
     </div>
