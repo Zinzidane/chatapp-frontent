@@ -17,6 +17,8 @@ export class ToolbarComponent implements OnInit {
   notifications = [];
   socket: any;
   count = [];
+  chatList = [];
+  msgNumber = 0;
 
   constructor(private router: Router, private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -34,7 +36,7 @@ export class ToolbarComponent implements OnInit {
 
     const dropdownElementTwo = document.querySelectorAll('.dropdown-trigger1');
     M.Dropdown.init(dropdownElementTwo, {
-      alignment: 'left',
+      alignment: 'right',
       hover: true,
       coverTrigger: false
     });
@@ -51,6 +53,8 @@ export class ToolbarComponent implements OnInit {
       this.notifications = data.result.notifications.reverse();
       const value = _.filter(this.notifications, ['read', false]);
       this.count = value;
+      this.chatList = data.result.chatList;
+      this.CheckIfRead(this.chatList);
     }, err => {
       if(err.error.token === null) {
         this.tokenService.DeleteToken();
@@ -78,4 +82,28 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  CheckIfRead(arr) {
+    const checkArr = [];
+
+    for(let i = 0;i < arr.length; i++) {
+      const receiver = arr[i].msgId.message[arr[i].msgId.message.length - 1];
+
+      // Check if user is not on chat page
+      if(this.router.url !== `/chat/${receiver.senderName}`) {
+        if(receiver.isRead === false && receiver.receiverName === this.user.username) {
+          checkArr.push(1);
+          this.msgNumber = _.sum(checkArr);
+        }
+      }
+    }
+  }
+
+  MessageDate(date) {
+    return moment(date).calendar(null, {
+      sameDay: '[Today]',
+      lastDay: '[Yesterday]',
+      lastWeek: 'DD/MM/YYYY',
+      sameElse: 'DD/MM/YYYY'
+    });
+  }
 }
