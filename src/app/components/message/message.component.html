@@ -51,7 +51,20 @@
               <textarea formControlName="message" (keypress)="IsTyping()" class="materialize-textarea inputBox"></textarea>
             </div>
             <div class="input-field col s1 emojiDiv">
-              <button class="emojiBtn">Emoji</button>
+              <button class="emojiBtn" (click)="Toggled()">😄</button>
+              <div class="emoji-content-editable"
+                  (emojiPickerCaretEmitter)="HandleCurrentCaret($event)"
+                  (input)="content = $event.target.textContent"
+                  [textContent]="content"
+                  contenteditable="true"></div>
+                <i
+                  class="emoji-toggle-button imgBtn"
+                  [(emojiPickerIf)]="toggled"
+                  [emojiPickerPreserveSelection]="false"
+                  [emojiPickerDirection]="direction"
+                  [emojiPickerAutofocus]="true"
+                  (emojiPickerSelect)="HandleSelection($event)"></i>
+              </div>
             </div>
             <div class="input-field col s1">
               <button class="suffix btn">Send</button>

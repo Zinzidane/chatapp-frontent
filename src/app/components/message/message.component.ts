@@ -5,6 +5,7 @@ import { MessageService } from 'src/app/services/message.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import io from 'socket.io-client';
+import { CaretEvent, EmojiEvent, EmojiPickerOptions } from 'ng2-emoji-picker';
 
 @Component({
   selector: 'app-message',
@@ -20,13 +21,27 @@ export class MessageComponent implements OnInit, AfterViewInit {
   typingMessage;
   typing = false;
 
+  public eventMock;
+  public eventPosMock;
+
+  public direction = Math.random() > 0.5 ? (Math.random() > 0.5 ? 'top' : 'bottom') : (Math.random() > 0.5 ? 'right' : 'left');
+  public toggled = false;
+  public content = ' ';
+
+  private _lastCaretEvent: CaretEvent;
+
   constructor(
     private fb: FormBuilder,
     private tokenService: TokenService,
     private usersService: UsersService,
     private messageService: MessageService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private emojiPickerOptions: EmojiPickerOptions) {
       this.socket = io('http://localhost:3000');
+      // this.emojiPickerOptions.setEmojiSheet({
+      //   url: 'sheet_apple_32.png',
+      //   locator: EmojiPickerAppleSheetLocator
+      // });
   }
 
   ngOnInit() {
@@ -107,5 +122,25 @@ export class MessageComponent implements OnInit, AfterViewInit {
         receiver: this.receiver.username
       });
     }, 500);
+  }
+
+  Toggled() {
+    this.toggled = !this.toggled;
+  }
+
+  HandleSelection(event: EmojiEvent) {
+    this.content = this.content.slice(0, this._lastCaretEvent.caretOffset) + event.char + this.content.slice(this._lastCaretEvent.caretOffset);
+    this.eventMock = JSON.stringify(event);
+
+    this.messageForm.value.message = this.content;
+
+    this.toggled = !this.toggled;
+    // Clear emoji
+    this.content = '';
+  }
+
+  HandleCurrentCaret(event: CaretEvent) {
+    this._lastCaretEvent = event;
+    this.eventPosMock = `{ caretOffset : ${event.caretOffset}, caretRange: Range{...}, textContent: ${event.textContent} }`;
   }
 }
