@@ -7,7 +7,7 @@
         </div>
         <div class="row">
           <div class="col s10 nameCol">
-            <span>{{receiver.username}}</span>
+            <span>{{receiver}}</span>
             <p class="isOnline">Online</p>
           </div>
         </div>
@@ -18,16 +18,17 @@
   <div class="col s12 rowDiv" ngx-auto-scroll lock-y-offset="10" observe-attributes>
     <div class="row">
       <div class="col s12">
-        <div class="message-wrapper" *ngFor="let message of messages">
-          <div class="left" *ngIf="user.username !== receiver.username && user.username !== message.senderName">
+        <div class="message-wrapper" *ngFor="let messageEl of messages">
+          <div class="left" *ngIf="user.username !== receiver && user.username !== messageEl.senderName">
             <div class="chat-bubble left slide-left">
-              <div class="message">{{message.body}}</div>
+              {{messageEl.senderName}} {{user.username}}
+              <div class="message">{{messageEl.body}}</div>
             </div>
           </div>
-
-          <div class="right" *ngIf="user.username === message.senderName">
+          <div class="right" *ngIf="user.username === messageEl.senderName">
             <div class="chat-bubble right slide-right">
-              <div class="message">{{message.body}}</div>
+                {{messageEl.senderName}} {{user.username}}
+              <div class="message">{{messageEl.body}}</div>
             </div>
           </div>
 
@@ -35,7 +36,7 @@
         </div>
         <div class="left" *ngIf="typing">
           <div class="chat-bubble left slide-left">
-            <div class="message">{{receiver.username}} is typing...</div>
+            <div class="message">{{receiver}} is typing...</div>
           </div>
         </div>
       </div>
@@ -46,9 +47,9 @@
     <div class="row">
       <div class="card" style="height: 55px;">
         <div class="inputRow">
-          <form [formGroup]="messageForm" (ngSubmit)="SendMessage()">
+          <form (ngSubmit)="SendMessage()">
             <div class="input-field col s10 inputField">
-              <textarea formControlName="message" (keypress)="IsTyping()" class="materialize-textarea inputBox"></textarea>
+              <textarea name="message" [(ngModel)]="message" (keypress)="IsTyping()" class="materialize-textarea inputBox"></textarea>
             </div>
             <div class="input-field col s1 emojiDiv">
               <button class="emojiBtn" (click)="Toggled()">😄</button>
@@ -56,15 +57,15 @@
                   (emojiPickerCaretEmitter)="HandleCurrentCaret($event)"
                   (input)="content = $event.target.textContent"
                   [textContent]="content"
-                  contenteditable="true"></div>
-                <i
+                  contenteditable="true">
+              </div>
+              <i
                   class="emoji-toggle-button imgBtn"
                   [(emojiPickerIf)]="toggled"
                   [emojiPickerPreserveSelection]="false"
                   [emojiPickerDirection]="direction"
                   [emojiPickerAutofocus]="true"
                   (emojiPickerSelect)="HandleSelection($event)"></i>
-              </div>
             </div>
             <div class="input-field col s1">
               <button class="suffix btn">Send</button>

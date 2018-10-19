@@ -16,7 +16,7 @@ export class PeopleComponent implements OnInit {
   userArr = [];
 
   constructor(private userService: UsersService, private tokenService: TokenService) {
-    this.socket = 'http://localhost:3000';
+    this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {

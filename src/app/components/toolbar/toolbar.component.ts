@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/services/users.service';
 import * as moment from 'moment';
 import io from 'socket.io-client';
 import _ from 'lodash';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,12 +21,19 @@ export class ToolbarComponent implements OnInit {
   chatList = [];
   msgNumber = 0;
 
-  constructor(private router: Router, private tokenService: TokenService, private usersService: UsersService) {
+  constructor(
+    private router: Router,
+    private tokenService: TokenService,
+    private usersService: UsersService,
+    private msgService: MessageService
+  ) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
     this.user = this.tokenService.GetPayload();
+
+    this.GetUser();
 
     const dropdownElement = document.querySelectorAll('.dropdown-trigger');
     M.Dropdown.init(dropdownElement, {
@@ -41,7 +49,6 @@ export class ToolbarComponent implements OnInit {
       coverTrigger: false
     });
 
-    this.GetUser();
 
     this.socket.on('refreshPage', () => {
       this.GetUser();
@@ -54,6 +61,8 @@ export class ToolbarComponent implements OnInit {
       const value = _.filter(this.notifications, ['read', false]);
       this.count = value;
       this.chatList = data.result.chatList;
+      console.log(data.result);
+
       this.CheckIfRead(this.chatList);
     }, err => {
       if(err.error.token === null) {
@@ -76,6 +85,13 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate(['streams']);
   }
 
+  GoToChatPage(name) {
+    this.router.navigate(['chat', name]);
+    this.msgService.MarkMessages(this.user.username, name).subscribe(data => {
+
+    });
+  }
+
   MarkAll() {
     this.usersService.MarkAllAsRead().subscribe(data => {
       this.socket.emit('refresh', {});
@@ -87,7 +103,7 @@ export class ToolbarComponent implements OnInit {
 
     for(let i = 0;i < arr.length; i++) {
       const receiver = arr[i].msgId.message[arr[i].msgId.message.length - 1];
-
+      console.log(arr[i]);
       // Check if user is not on chat page
       if(this.router.url !== `/chat/${receiver.senderName}`) {
         if(receiver.isRead === false && receiver.receiverName === this.user.username) {

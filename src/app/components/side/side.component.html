@@ -23,29 +23,49 @@
 </div>
 <ul class="collection with-header">
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-    <a [routerLink]="['/streams']" class="secondary-content">
-      <div>Streams<i class="material-icons">announcement</i></div>
+    <a [routerLink]="['/streams']">
+      <div>Streams
+        <span class="secondary-content">
+          <i class="material-icons">announcement</i>
+        </span>
+      </div>
     </a>
   </li>
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-    <a [routerLink]="['/people']" class="secondary-content">
-      <div>People<i class="material-icons">people</i></div>
+    <a [routerLink]="['/people']">
+      <div>People
+        <span class="secondary-content">
+          <i class="material-icons">people</i>
+        </span>
+      </div>
     </a>
   </li>
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-    <a [routerLink]="['/people','following']" class="secondary-content">
-      <div>Following<i class="material-icons">people</i></div>
+    <a [routerLink]="['/people','following']">
+      <div>Following
+        <span class="secondary-content">
+          <i class="material-icons">people</i>
+        </span>
+      </div>
     </a>
   </li>
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-    <a [routerLink]="['/people','followers']" class="secondary-content">
-      <div>Followers<i class="material-icons">people_outline</i></div>
+    <a [routerLink]="['/people','followers']">
+      <div>Followers
+        <span class="secondary-content">
+          <i class="material-icons">people_outline</i>
+        </span>
+      </div>
     </a>
   </li>
   <li class="collection-item"><div>Photos<a href="#!" class="secondary-content"><i class="material-icons">photo_library</i></a></div></li>
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-    <a [routerLink]="['/notifications']" class="secondary-content">
-      <div>Notifications<i class="material-icons">alarm</i></div>
+    <a [routerLink]="['/notifications']">
+      <div>Notifications
+        <span class="secondary-content">
+          <i class="material-icons">alarm</i>
+        </span>
+      </div>
     </a>
   </li>
 </ul>
