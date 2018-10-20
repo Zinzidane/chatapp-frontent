@@ -61,7 +61,6 @@ export class ToolbarComponent implements OnInit {
       const value = _.filter(this.notifications, ['read', false]);
       this.count = value;
       this.chatList = data.result.chatList;
-      console.log(data.result);
 
       this.CheckIfRead(this.chatList);
     }, err => {
@@ -88,7 +87,7 @@ export class ToolbarComponent implements OnInit {
   GoToChatPage(name) {
     this.router.navigate(['chat', name]);
     this.msgService.MarkMessages(this.user.username, name).subscribe(data => {
-
+      this.socket.emit('refresh', {});
     });
   }
 
@@ -98,12 +97,19 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  MarkAllMessages() {
+    this.msgService.MarkAllMessages().subscribe(data => {
+      this.socket.emit('refresh', {});
+      this.msgNumber = 0;
+    });
+  }
+
   CheckIfRead(arr) {
     const checkArr = [];
 
     for(let i = 0;i < arr.length; i++) {
       const receiver = arr[i].msgId.message[arr[i].msgId.message.length - 1];
-      console.log(arr[i]);
+
       // Check if user is not on chat page
       if(this.router.url !== `/chat/${receiver.senderName}`) {
         if(receiver.isRead === false && receiver.receiverName === this.user.username) {
