@@ -8,7 +8,7 @@
           <span class="nav-label-icon" *ngIf="count.length > 0">{{count.length}}</span>
           <ul id="dropdown" class="dropdown-content col s12 collection">
             <li class="collection-item avatar" *ngFor="let notification of notifications">
-              <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
+              <img class="circle" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{imageVersion}}/{{imageId}}" alt="User avatar">
               <span [ngClass]="notification.read ? 'isRead': 'unread'">{{notification.message}}</span>
               <p class="time">{{TimeFromNow(notification.created)}}</p>
             </li>
@@ -55,7 +55,7 @@
     </div>
     <div class="nav-content">
       <div class="nav-div">
-        <img src="https://via.placeholder.com/50x50" class="circle responsive-img">
+        <img src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{imageVersion}}/{{imageId}}" class="circle responsive-img">
       </div>
       <h1 class="profile-name">{{user.username}}</h1>
     </div>

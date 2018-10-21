@@ -10,17 +10,17 @@
           <div class="file-field input-field">
             <div class="btn">
               <span>File</span>
-              <input type="file">
+              <input type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text">
+              <input class="file-path validate" id="filePath" type="text">
             </div>
           </div>
 
         </div>
         <div class="col s6">
           <div class="file-field input-field">
-            <a class="waves-effect waves-light btn"><i class="material-icons left">image</i>Upload Image</a>
+            <a class="waves-effect waves-light btn" (click)="Upload()"><i class="material-icons left">image</i>Upload Image</a>
           </div>
         </div>
       </div>

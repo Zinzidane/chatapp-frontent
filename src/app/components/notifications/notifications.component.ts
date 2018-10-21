@@ -16,7 +16,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
-   }
+  }
 
   ngOnInit() {
     this.user = this.tokenService.GetPayload();
@@ -29,6 +29,7 @@ export class NotificationsComponent implements OnInit {
   GetUser() {
     this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.notifications = data.result.notifications.reverse();
+      console.log(this.notifications);
     });
   }
 
