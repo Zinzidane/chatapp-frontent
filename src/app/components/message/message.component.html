@@ -7,8 +7,9 @@
         </div>
         <div class="row">
           <div class="col s10 nameCol">
-            <span>{{receiver}}</span>
-            <p class="isOnline">Online</p>
+            <span>{{receiver}}
+              <p class="isOnline" *ngIf="isOnline">Online</p>
+            </span>
           </div>
         </div>
       </div>

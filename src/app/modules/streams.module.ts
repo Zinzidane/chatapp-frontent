@@ -22,6 +22,7 @@ import { MessageService } from '../services/message.service';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { EmojiPickerModule } from 'ng2-emoji-picker';
 import { FollowingComponent } from '../components/following/following.component';
+import { ImagesComponent } from '../components/images/images.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { FollowingComponent } from '../components/following/following.component'
     NotificationsComponent,
     TopStreamsComponent,
     ChatComponent,
-    MessageComponent
+    MessageComponent,
+    ImagesComponent
   ],
   exports: [StreamsComponent, ToolbarComponent],
   providers: [TokenService, PostService, UsersService, MessageService]
