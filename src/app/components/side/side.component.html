@@ -58,6 +58,15 @@
       </div>
     </a>
   </li>
+  <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/images', user.username]">
+      <div>Photos
+        <span class="secondary-content">
+          <i class="material-icons">photo_library</i>
+        </span>
+      </div>
+    </a>
+  </li>
   <li class="collection-item"><div>Photos<a href="#!" class="secondary-content"><i class="material-icons">photo_library</i></a></div></li>
   <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
     <a [routerLink]="['/notifications']">
