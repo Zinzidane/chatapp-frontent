@@ -23,6 +23,7 @@ import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { EmojiPickerModule } from 'ng2-emoji-picker';
 import { FollowingComponent } from '../components/following/following.component';
 import { ImagesComponent } from '../components/images/images.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { ImagesComponent } from '../components/images/images.component';
     HttpClientModule,
     RouterModule,
     NgxAutoScrollModule,
+    FileUploadModule,
     EmojiPickerModule.forRoot()
   ],
   declarations: [
