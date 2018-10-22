@@ -52,6 +52,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: ':name',
+    component: ViewUserComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: 'streams'
   }
