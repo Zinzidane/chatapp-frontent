@@ -7,7 +7,7 @@
     <div class="col s12 m8 l9">
       <ul class="collection col s12 m10" *ngIf="notifications.length > -1; else empty">
         <li class="collection-item avatar" *ngFor="let notificationEl of notifications">
-          <img class="circle" src="http://placehold.it/50x50" alt="User avatar">
+          <img class="circle" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{notificationEl.senderId.picVersion}}/{{notificationEl.senderId.picId}}" alt="User avatar">
           <span class="title">{{notificationEl.message}}</span>
           <a class="secondary-content">
             <i *ngIf="!notificationEl.read" class="material-icons">brightness_1</i>

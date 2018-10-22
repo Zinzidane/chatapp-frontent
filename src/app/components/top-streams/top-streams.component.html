@@ -1,6 +1,6 @@
 <ul class="collection col s12 m12 l10">
   <li class="collection-item avatar" *ngFor="let post of topPosts">
-    <img src="http://placehold.it/50x50" alt="" class="circle">
+    <img src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{post.user.picVersion}}/{{post.user.picId}}" alt="Avatar" class="circle">
     <span class="title">{{post.username}}</span>
     <p class="time">{{TimeFromNow(post.created)}} <br>
         <!-- Country -->
