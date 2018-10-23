@@ -1,3 +1,99 @@
-<p>
-  view-user works!
-</p>
+<app-toolbar></app-toolbar>
+
+<div class="container">
+  <div class="col s12 m12 l10">
+    <ul class="tabs">
+      <li class="tab col s4" (click)="ChangeTab('posts')">
+        <a href="#" class="active">Posts</a>
+      </li>
+      <li class="tab col s4" (click)="ChangeTab('following')">
+        <a href="#">Following</a>
+      </li>
+      <li class="tab col s4" (click)="ChangeTab('followers')">
+        <a href="#">Followers</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 m4 l3">
+      <div class="row">
+        <div class="col s12">
+          <span class="title">Username</span>
+          <h2>Country</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s12 m8 l9" style="background: white;">
+      <div class="row">
+        <div class="col s12">
+          <div class="row"  *ngIf="postsTab">
+            <ul class="collection col s12 m12 l10">
+              <li class="collection-item avatar">
+                <img class="circle" src="http://placehold.it/100x100">
+                <span class="post">This is it</span>
+                <p class="time">Date
+                  <br> Country
+                </p>
+              </li>
+              <div class="row">
+                <div class="col s12">
+                  <div class="card">
+                    <div class="card-image card_image">
+                      <img class="postImage" src="http://placehold.it/100x100">
+                    </div>
+                    <div class="card-content">
+                      <p>Testing</p>
+                    </div>
+                    <div class="card-action">
+                      <i class="material-icons">thumb_up</i>
+                      <span id="iconSpan">
+                        10
+                      </span>
+                      <i class="material-icons">chat</i>
+                      <span id="iconSpan">
+                        10
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ul>
+          </div>
+
+          <div class="row" *ngIf="followingTab">
+            <div class="col s12 m4 l4">
+              <div class="card">
+                <div class="card-image imgDiv">
+                  <img class="imgCircle" src="http://placehold.it/100x100">
+                </div>
+                <div class="card-action">
+                  <h3 class="card-title">Following</h3>
+                  <p>Country</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="followersTab">
+            <div class="col s12 m4 l4">
+              <div class="card">
+                <div class="card-image imgDiv">
+                  <img class="imgCircle" src="http://placehold.it/100x100">
+                </div>
+                <div class="card-action">
+                  <h3 class="card-title">Followers</h3>
+                  <p>Country</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
