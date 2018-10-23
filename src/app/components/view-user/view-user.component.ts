@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as M from 'materialize-css';
 import { UsersService } from 'src/app/services/users.service';
-import { TokenService } from 'src/app/services/token.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 
@@ -21,10 +20,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   user: any;
   name: any;
 
-  constructor(private usersService: UsersService, private tokenService: TokenService, private route: ActivatedRoute) { }
+  constructor(private usersService: UsersService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.user = this.tokenService.GetPayload();
+
     this.postsTab = true;
     const tabs = document.querySelector('.tabs');
     M.Tabs.init(tabs, {});
@@ -42,6 +41,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
 
   GetUserData(name) {
     this.usersService.GetUserByName(name).subscribe(data => {
+      this.user = data.result;
       this.posts = data.result.posts;
       this.followers = data.result.followers;
       this.following = data.result.following;
