@@ -8,8 +8,8 @@
       <div class="row">
         <div class="col s12 m6 l4 cardDiv" *ngFor="let user of users">
           <div class="card">
-            <a>
-              <div class="card-image imgDiv" (click)="ViewUser(user)">
+            <a (click)="ViewUser(user)">
+              <div class="card-image imgDiv">
                 <img class="imgCircle responsive-img" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{user.picVersion}}/{{user.picId}}" alt="Avatar">
               </div>
             </a>
