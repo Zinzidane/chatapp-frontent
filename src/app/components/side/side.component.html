@@ -76,4 +76,13 @@
       </div>
     </a>
   </li>
+  <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/account', 'password']">
+      <div>Change password
+        <span class="secondary-content">
+          <i class="material-icons">vpn_key</i>
+        </span>
+      </div>
+    </a>
+  </li>
 </ul>
