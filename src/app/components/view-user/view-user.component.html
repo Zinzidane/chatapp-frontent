@@ -16,13 +16,13 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" style="margin-top: 30px;">
   <div class="row">
     <div class="col s12 m4 l3">
       <div class="row">
         <div class="col s12">
-          <span class="title">Username</span>
-          <h2>Country</h2>
+          <span class="title">{{name}}</span>
+          <h2 class="cityName">Country</h2>
         </div>
       </div>
     </div>
@@ -31,12 +31,12 @@
       <div class="row">
         <div class="col s12">
           <div class="row"  *ngIf="postsTab">
-            <ul class="collection col s12 m12 l10">
+            <ul class="collection col s12 m12 l10" *ngFor="let post of posts">
               <li class="collection-item avatar">
                 <img class="circle" src="http://placehold.it/100x100">
-                <span class="post">This is it</span>
-                <p class="time">Date
-                  <br> Country
+                <span class="post">{{post.postId.username}}</span>
+                <p class="time">{{TimeFromNow(post.created)}}
+                  <br>
                 </p>
               </li>
               <div class="row">
@@ -46,16 +46,16 @@
                       <img class="postImage" src="http://placehold.it/100x100">
                     </div>
                     <div class="card-content">
-                      <p>Testing</p>
+                      <p>{{post.postId.post}}</p>
                     </div>
                     <div class="card-action">
                       <i class="material-icons">thumb_up</i>
                       <span id="iconSpan">
-                        10
+                        {{post.postId.totalLikes}}
                       </span>
                       <i class="material-icons">chat</i>
                       <span id="iconSpan">
-                        10
+                        {{post.postId.comments.length}}
                       </span>
                     </div>
                   </div>
@@ -65,32 +65,31 @@
           </div>
 
           <div class="row" *ngIf="followingTab">
-            <div class="col s12 m4 l4">
+            <div class="col s12 m4 l4" *ngFor="let userEl of following">
               <div class="card">
                 <div class="card-image imgDiv">
-                  <img class="imgCircle" src="http://placehold.it/100x100">
+                  <img class="imgCircle" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{userEl.userFollowed.picVersion}}/{{userEl.userFollowed.picId}}">
                 </div>
                 <div class="card-action">
-                  <h3 class="card-title">Following</h3>
-                  <p>Country</p>
+                  <h3 class="card-title">{{userEl.userFollowed.username}}</h3>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="row" *ngIf="followersTab">
-            <div class="col s12 m4 l4">
+            <div class="col s12 m4 l4" *ngFor="let follower of followers">
               <div class="card">
                 <div class="card-image imgDiv">
-                  <img class="imgCircle" src="http://placehold.it/100x100">
+                  <img class="imgCircle" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{follower.follower.picVersion}}/{{follower.follower.picId}}">
                 </div>
                 <div class="card-action">
-                  <h3 class="card-title">Followers</h3>
-                  <p>Country</p>
+                  <h3 class="card-title">{{follower.follower.username}}</h3>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
