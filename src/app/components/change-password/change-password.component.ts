@@ -20,11 +20,30 @@ export class ChangePasswordComponent implements OnInit {
       cpassword: ['', Validators.required],
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
+    }, {
+      validator: this.ValidateForm.bind(this)
     });
   }
 
   ChangePassword() {
 
+  }
+
+  ValidateForm(form: FormGroup) {
+    const newPassword = form.controls.newPassword.value;
+    const confirmPassword = form.controls.confirmPassword.value;
+
+    if(confirmPassword.length <= 0) {
+      return null;
+    }
+
+    if(confirmPassword !== newPassword) {
+      return {
+        doesNotMatch: true
+      };
+    }
+
+    return null;
   }
 
 }
