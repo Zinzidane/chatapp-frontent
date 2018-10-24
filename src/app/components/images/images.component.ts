@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
-import { UsersService } from 'src/app/services/users.service';
-import { TokenService } from 'src/app/services/token.service';
+import { UsersService } from '../../services/users.service';
+import { TokenService } from '../../services/token.service';
 import io from 'socket.io-client';
 
 const URL = 'http://localhost:3000/api/chatapp/upload-image';
