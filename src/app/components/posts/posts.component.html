@@ -25,3 +25,14 @@
     </div>
   </li>
 </ul>
+<div class="row" *ngIf="!noMoreOrders">
+  <div class="col s12 center">
+    <button
+      class="btn"
+      (click)="LoadMore()"
+    >
+      Show more
+    </button>
+  </div>
+</div>
+

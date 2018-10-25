@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const BASEURL = 'http://localhost:3000/api/chatapp';
@@ -15,8 +15,12 @@ export class PostService {
     return this.http.post(`${BASEURL}/post/add-post`, body);
   }
 
-  getAllPosts(): Observable<any> {
-    return this.http.get(`${BASEURL}/posts`);
+  getAllPosts(params: any = {}): Observable<any> {
+    return this.http.get(`${BASEURL}/posts`, {
+      params: new HttpParams({
+        fromObject: params
+      })
+    });
   }
 
   addLike(body): Observable<any> {
