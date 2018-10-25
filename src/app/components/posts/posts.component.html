@@ -3,7 +3,7 @@
     <img src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{post.user.picVersion}}/{{post.user.picId}}" alt="Avatar" class="circle">
     <span class="title">{{post.username}}</span>
     <p class="time">{{TimeFromNow(post.created)}} <br>
-       <!-- Country -->
+       @{{post.user.city}}, {{post.user.country}}
     </p>
     <div class="row">
       <div class="col s12">

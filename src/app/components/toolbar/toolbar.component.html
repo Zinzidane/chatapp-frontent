@@ -55,9 +55,11 @@
     </div>
     <div class="nav-content">
       <div class="nav-div">
-        <img src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{imageVersion}}/{{imageId}}" class="circle responsive-img">
+        <img *ngIf="imageId" src="https://res.cloudinary.com/dkqx63bec/image/upload/v{{imageVersion}}/{{imageId}}" class="circle responsive-img">
       </div>
       <h1 class="profile-name">{{user.username}}</h1>
     </div>
   </div>
 </nav>
+
+<router-outlet></router-outlet>

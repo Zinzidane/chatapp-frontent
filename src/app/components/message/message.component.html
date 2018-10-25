@@ -22,13 +22,11 @@
         <div class="message-wrapper" *ngFor="let messageEl of messages">
           <div class="left" *ngIf="user.username !== receiver && user.username !== messageEl.senderName">
             <div class="chat-bubble left slide-left">
-              {{messageEl.senderName}} {{user.username}}
               <div class="message">{{messageEl.body}}</div>
             </div>
           </div>
           <div class="right" *ngIf="user.username === messageEl.senderName">
             <div class="chat-bubble right slide-right">
-                {{messageEl.senderName}} {{user.username}}
               <div class="message">{{messageEl.body}}</div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,7 @@ import * as moment from 'moment';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css']
 })
-export class CommentsComponent implements OnInit, AfterViewInit {
+export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   toolbarElement: any;
   socket: any;
   commentForm: FormGroup;
@@ -37,6 +37,10 @@ export class CommentsComponent implements OnInit, AfterViewInit {
     this.toolbarElement.style.display = 'none';
   }
 
+  ngOnDestroy() {
+    this.toolbarElement.style.display = 'block';
+  }
+
   init() {
     this.commentForm = this.fb.group({
       comment: ['', Validators.required]
@@ -58,6 +62,7 @@ export class CommentsComponent implements OnInit, AfterViewInit {
     this.postService.getPost(this.postId).subscribe(data => {
       this.post = data.post.post;
       this.commentsArray = data.post.comments.reverse();
+      console.log(this.commentsArray);
     })
   }
 }

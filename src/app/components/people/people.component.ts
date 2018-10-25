@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import _ from 'lodash';
 import { TokenService } from 'src/app/services/token.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './people.component.html',
   styleUrls: ['./people.component.css']
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit, AfterViewInit {
   socket: any;
   users = [];
   loggedInUser: any;
@@ -29,6 +29,12 @@ export class PeopleComponent implements OnInit {
     this.socket.on('refreshPage', () => {
       this.GetUsers();
       this.GetUser();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.socket.on('usersOnline', (data) => {
+      this.onlineUsersArr = data;
     });
   }
 
@@ -60,9 +66,9 @@ export class PeopleComponent implements OnInit {
     }
   }
 
-  online(event) {
-    this.onlineUsersArr = event;
-  }
+  // online(event) {
+  //   this.onlineUsersArr = event;
+  // }
 
   CheckIfOnline(name) {
     const result = _.indexOf(this.onlineUsersArr, name);

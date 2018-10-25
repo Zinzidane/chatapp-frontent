@@ -1,15 +1,16 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as M from 'materialize-css';
 import { UsersService } from 'src/app/services/users.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.css']
 })
-export class ViewUserComponent implements OnInit, AfterViewInit {
+export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
   tabElement: any;
   postsTab = false;
   followingTab = false;
@@ -20,10 +21,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
   user: any;
   name: any;
 
-  constructor(private usersService: UsersService, private route: ActivatedRoute) { }
+  constructor(private usersService: UsersService, private tokenService: TokenService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    this.user = this.tokenService.GetPayload();
     this.postsTab = true;
     const tabs = document.querySelector('.tabs');
     M.Tabs.init(tabs, {});
@@ -39,9 +40,13 @@ export class ViewUserComponent implements OnInit, AfterViewInit {
     this.tabElement.style.display = 'none';
   }
 
+  ngOnDestroy() {
+    this.tabElement.style.display = 'block';
+  }
+
   GetUserData(name) {
     this.usersService.GetUserByName(name).subscribe(data => {
-      this.user = data.result;
+
       this.posts = data.result.posts.reverse();
       this.followers = data.result.followers;
       this.following = data.result.following;

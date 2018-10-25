@@ -11,61 +11,65 @@ import { ChatComponent } from '../components/chat/chat.component';
 import { ImagesComponent } from '../components/images/images.component';
 import { ViewUserComponent } from '../components/view-user/view-user.component';
 import { ChangePasswordComponent } from '../components/change-password/change-password.component';
+import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 
 const routes: Routes = [
-  {
-    path: 'streams',
-    component: StreamsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'post/:id',
-    component: CommentsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'people',
-    component: PeopleComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'people/following',
-    component: FollowingComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'people/followers',
-    component: FollowersComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'notifications',
-    component: NotificationsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'chat/:name',
-    component: ChatComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'images/:name',
-    component: ImagesComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: ':name',
-    component: ViewUserComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'account/password',
-    component: ChangePasswordComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: '**',
-    redirectTo: 'streams'
+ { path: '', component: ToolbarComponent, canActivate: [AuthGuard], children: [
+      {
+        path: 'streams',
+        component: StreamsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'post/:id',
+        component: CommentsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'people',
+        component: PeopleComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'people/following',
+        component: FollowingComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'people/followers',
+        component: FollowersComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'chat/:name',
+        component: ChatComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'images/:name',
+        component: ImagesComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: ':name',
+        component: ViewUserComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'account/password',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: '**',
+        redirectTo: 'streams'
+      }
+    ]
   }
 ];
 
