@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PostService } from '../../services/post.service';
 import io from 'socket.io-client';
+import { Subscription } from 'rxjs';
 
 const URL = 'http://localhost:3000/api/chatapp/upload-image';
 
@@ -11,7 +12,7 @@ const URL = 'http://localhost:3000/api/chatapp/upload-image';
   templateUrl: './post-form.component.html',
   styleUrls: ['./post-form.component.css']
 })
-export class PostFormComponent implements OnInit {
+export class PostFormComponent implements OnInit, OnDestroy {
   uploader: FileUploader = new FileUploader({
     url: URL,
     disableMultipart: true
@@ -19,6 +20,7 @@ export class PostFormComponent implements OnInit {
   socket: any;
   postForm: FormGroup;
   selectedFile: any;
+  sSub: Subscription;
 
   constructor(private fb: FormBuilder, private postService: PostService) {
     this.socket = io('http://localhost:3000');
@@ -26,6 +28,10 @@ export class PostFormComponent implements OnInit {
 
   ngOnInit() {
     this.init();
+  }
+
+  ngOnDestroy() {
+    this.sSub.unsubscribe();
   }
 
   init() {
@@ -46,7 +52,7 @@ export class PostFormComponent implements OnInit {
         image: this.selectedFile
       };
     }
-    this.postService.addPost(body).subscribe(data => {
+    this.sSub = this.postService.addPost(body).subscribe(data => {
       this.socket.emit('refresh', {data: 'mess0'});
       this.postForm.reset();
     });

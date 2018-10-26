@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,13 +9,18 @@ import { UsersService } from '../../services/users.service';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
   passwordForm: FormGroup;
+  cSub: Subscription;
 
   constructor(private fb: FormBuilder, private usersService: UsersService) { }
 
   ngOnInit() {
     this.init();
+  }
+
+  ngOnDestroy() {
+    this.cSub.unsubscribe();
   }
 
   init() {
@@ -28,7 +34,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ChangePassword() {
-    this.usersService.ChangePassword(this.passwordForm.value).subscribe(data => {
+    this.cSub = this.usersService.ChangePassword(this.passwordForm.value).subscribe(data => {
       this.passwordForm.reset();
     }, err => console.log(err));
   }

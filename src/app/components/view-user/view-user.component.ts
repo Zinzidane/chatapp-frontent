@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import * as M from 'materialize-css';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from '../../services/users.service';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import { TokenService } from 'src/app/services/token.service';
+import { TokenService } from '../../services/token.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-user',
@@ -20,6 +21,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
   followers = [];
   user: any;
   name: any;
+  gSub: Subscription;
 
   constructor(private usersService: UsersService, private tokenService: TokenService, private route: ActivatedRoute) { }
 
@@ -42,10 +44,11 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.tabElement.style.display = 'block';
+    this.gSub.unsubscribe();
   }
 
   GetUserData(name) {
-    this.usersService.GetUserByName(name).subscribe(data => {
+    this.gSub = this.usersService.GetUserByName(name).subscribe(data => {
 
       this.posts = data.result.posts.reverse();
       this.followers = data.result.followers;

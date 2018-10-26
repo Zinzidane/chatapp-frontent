@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import * as M from 'materialize-css';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from '../../services/users.service';
 import * as moment from 'moment';
 import io from 'socket.io-client';
 import _ from 'lodash';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from '../../services/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
   // @Output() onlineUsers = new EventEmitter();
   user: any;
   notifications = [];
@@ -23,6 +24,10 @@ export class ToolbarComponent implements OnInit {
   msgNumber = 0;
   imageId: any;
   imageVersion: any;
+  mSub: Subscription;
+  markSub: Subscription;
+  markAllSub: Subscription;
+  gSub: Subscription;
 
   constructor(
     private router: Router,
@@ -59,6 +64,13 @@ export class ToolbarComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.mSub.unsubscribe();
+    this.markSub.unsubscribe();
+    this.markAllSub.unsubscribe();
+    this.gSub.unsubscribe();
+  }
+
   // ngAfterViewInit() {
   //   this.socket.on('usersOnline', (data) => {
   //     this.onlineUsers.emit(data);
@@ -66,8 +78,7 @@ export class ToolbarComponent implements OnInit {
   // }
 
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
-      console.log(data.result);
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.imageId = data.result.picId;
       this.imageVersion = data.result.picVersion;
       this.notifications = data.result.notifications.reverse();
@@ -99,19 +110,19 @@ export class ToolbarComponent implements OnInit {
 
   GoToChatPage(name) {
     this.router.navigate(['chat', name]);
-    this.msgService.MarkMessages(this.user.username, name).subscribe(data => {
+    this.mSub = this.msgService.MarkMessages(this.user.username, name).subscribe(data => {
       this.socket.emit('refresh', {});
     });
   }
 
   MarkAll() {
-    this.usersService.MarkAllAsRead().subscribe(data => {
+    this.markSub = this.usersService.MarkAllAsRead().subscribe(data => {
       this.socket.emit('refresh', {});
     });
   }
 
   MarkAllMessages() {
-    this.msgService.MarkAllMessages().subscribe(data => {
+    this.markAllSub = this.msgService.MarkAllMessages().subscribe(data => {
       this.socket.emit('refresh', {});
       this.msgNumber = 0;
     });

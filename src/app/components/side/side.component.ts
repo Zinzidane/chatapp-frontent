@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { TokenService } from 'src/app/services/token.service';
-import { UsersService } from 'src/app/services/users.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TokenService } from '../../services/token.service';
+import { UsersService } from '../../services/users.service';
 import io from 'socket.io-client';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-side',
   templateUrl: './side.component.html',
   styleUrls: ['./side.component.css']
 })
-export class SideComponent implements OnInit {
+export class SideComponent implements OnInit, OnDestroy {
   socket: any;
   user: any;
   userData: any;
+  gSub: Subscription;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -25,8 +27,12 @@ export class SideComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.gSub.unsubscribe();
+  }
+
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.userData = data.result;
     });
   }

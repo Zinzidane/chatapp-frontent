@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { PostService } from 'src/app/services/post.service';
-import { TokenService } from 'src/app/services/token.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PostService } from '../../services/post.service';
+import { TokenService } from '../../services/token.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import io from 'socket.io-client';
 import _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-top-streams',
   templateUrl: './top-streams.component.html',
   styleUrls: ['./top-streams.component.css']
 })
-export class TopStreamsComponent implements OnInit {
+export class TopStreamsComponent implements OnInit, OnDestroy {
   topPosts: any;
   socket: any;
   user: any;
+  aSub: Subscription;
+  lSub: Subscription;
 
   constructor(private postService: PostService, private tokenService: TokenService, private router: Router) {
     this.socket = io('http://localhost:3000');
@@ -29,8 +32,13 @@ export class TopStreamsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.aSub.unsubscribe();
+    this.lSub.unsubscribe();
+  }
+
   AllPosts() {
-    this.postService.getAllPosts().subscribe(data => {
+    this.aSub = this.postService.getAllPosts().subscribe(data => {
       this.topPosts = data.top;
     }, err => {
       if(err.error.token === null) {
@@ -49,7 +57,7 @@ export class TopStreamsComponent implements OnInit {
   }
 
   LikePost(post) {
-    this.postService.addLike(post).subscribe(data => {
+    this.lSub = this.postService.addLike(post).subscribe(data => {
       this.socket.emit('refresh', {});
     }, err => console.log(err));
   }

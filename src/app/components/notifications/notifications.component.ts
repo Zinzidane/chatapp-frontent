@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { TokenService } from 'src/app/services/token.service';
-import { UsersService } from 'src/app/services/users.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TokenService } from '../../services/token.service';
+import { UsersService } from '../../services/users.service';
 import io from 'socket.io-client';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit, OnDestroy {
   socket: any;
   user: any;
   notifications = [];
+  gSub: Subscription;
+  mSub: Subscription;
+  dSub: Subscription;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -26,8 +30,14 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.gSub.unsubscribe();
+    this.mSub.unsubscribe();
+    this.dSub.unsubscribe();
+  }
+
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.notifications = data.result.notifications.reverse();
       console.log(this.notifications);
     });
@@ -38,13 +48,13 @@ export class NotificationsComponent implements OnInit {
   }
 
   MarkNotification(notification) {
-    this.usersService.MarkNotification(notification._id).subscribe(data => {
+    this.mSub = this.usersService.MarkNotification(notification._id).subscribe(data => {
       this.socket.emit('refresh', {});
     });
   }
 
   DeleteNotification(notification) {
-    this.usersService.MarkNotification(notification._id, true).subscribe(data => {
+    this.dSub = this.usersService.MarkNotification(notification._id, true).subscribe(data => {
       this.socket.emit('refresh', {});
     });
   }

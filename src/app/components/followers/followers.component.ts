@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { TokenService } from 'src/app/services/token.service';
 import io from 'socket.io-client';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-followers',
   templateUrl: './followers.component.html',
   styleUrls: ['./followers.component.css']
 })
-export class FollowersComponent implements OnInit {
+export class FollowersComponent implements OnInit, OnDestroy {
   followers = [];
   user: any;
   socket: any;
+  gSub: Subscription;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -25,8 +27,12 @@ export class FollowersComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.gSub.unsubscribe();
+  }
+
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.followers = data.result.followers;
     }, err => {
       console.log(err);

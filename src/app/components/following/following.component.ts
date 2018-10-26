@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { TokenService } from 'src/app/services/token.service';
-import { UsersService } from 'src/app/services/users.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { TokenService } from '../../services/token.service';
+import { UsersService } from '../../services/users.service';
 import io from 'socket.io-client';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.css']
 })
-export class FollowingComponent implements OnInit {
+export class FollowingComponent implements OnInit, OnDestroy {
   socket: any;
   following = [];
   user: any;
+  gSub: Subscription;
+  uSub: Subscription;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -26,8 +29,13 @@ export class FollowingComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.gSub.unsubscribe();
+    this.uSub.unsubscribe();
+  }
+
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.following = data.result.following;
     }, err => {
       console.log(err);
@@ -35,7 +43,7 @@ export class FollowingComponent implements OnInit {
   }
 
   UnfollowUser(user) {
-    this.usersService.UnfollowUser(user._id).subscribe(data => {
+    this.uSub = this.usersService.UnfollowUser(user._id).subscribe(data => {
       this.socket.emit('refresh', {});
     });
   }

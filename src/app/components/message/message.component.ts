@@ -1,18 +1,19 @@
-import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { TokenService } from 'src/app/services/token.service';
-import { MessageService } from 'src/app/services/message.service';
+import { Component, OnInit, AfterViewInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { TokenService } from '../../services/token.service';
+import { MessageService } from '../../services/message.service';
 import { ActivatedRoute } from '@angular/router';
-import { UsersService } from 'src/app/services/users.service';
+import { UsersService } from '../../services/users.service';
 import io from 'socket.io-client';
 import { CaretEvent, EmojiEvent, EmojiPickerOptions } from 'ng2-emoji-picker';
 import _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit, AfterViewInit, OnChanges {
+export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() users;
   receiver: string;
   receiverData: any;
@@ -23,6 +24,9 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges {
   typingMessage;
   typing = false;
   isOnline = false;
+  gSub: Subscription;
+  getMessagesSub: Subscription;
+  sendMessageSub: Subscription;
 
   eventMock;
   eventPosMock;
@@ -96,9 +100,15 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
+  ngOnDestroy() {
+    this.gSub.unsubscribe();
+    this.getMessagesSub.unsubscribe();
+    this.sendMessageSub.unsubscribe();
+  }
+
 
   GetUserByUsername(username) {
-    this.usersService.GetUserByName(username).subscribe(data => {
+    this.gSub = this.usersService.GetUserByName(username).subscribe(data => {
       this.receiverData = data.result;
 
       this.GetMessages(this.user._id, this.receiverData._id);
@@ -106,15 +116,14 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   GetMessages(senderId, receiverId) {
-    this.msgService.GetAllMessages(senderId, receiverId).subscribe(data => {
+    this.getMessagesSub = this.msgService.GetAllMessages(senderId, receiverId).subscribe(data => {
       this.messages = data.messages.message;
-      console.log(data.messages);
     });
   }
 
   SendMessage() {
     if (this.message) {
-      this.msgService.SendMessage(this.user._id, this.receiverData._id, this.receiverData.username, this.message).subscribe(data => {
+      this.sendMessageSub = this.msgService.SendMessage(this.user._id, this.receiverData._id, this.receiverData.username, this.message).subscribe(data => {
         this.socket.emit('refresh', {});
         this.message = '';
       });

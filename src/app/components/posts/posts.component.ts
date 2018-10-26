@@ -22,6 +22,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   limit = STEP;
   noMoreOrders = false;
   pSub: Subscription;
+  lSub: Subscription;
 
   constructor(private postService: PostService, private tokenService: TokenService, private router: Router) {
     this.socket = io('http://localhost:3000');
@@ -39,6 +40,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.pSub.unsubscribe();
+    this.lSub.unsubscribe();
   }
 
   AllPosts() {
@@ -71,7 +73,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   LikePost(post) {
-    this.postService.addLike(post).subscribe(data => {
+    this.lSub = this.postService.addLike(post).subscribe(data => {
       this.socket.emit('refresh', {});
     }, err => console.log(err));
   }

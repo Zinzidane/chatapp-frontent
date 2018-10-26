@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { UsersService } from '../../services/users.service';
 import { TokenService } from '../../services/token.service';
 import io from 'socket.io-client';
+import { Subscription } from 'rxjs';
 
 const URL = 'http://localhost:3000/api/chatapp/upload-image';
 
@@ -11,7 +12,7 @@ const URL = 'http://localhost:3000/api/chatapp/upload-image';
   templateUrl: './images.component.html',
   styleUrls: ['./images.component.css']
 })
-export class ImagesComponent implements OnInit {
+export class ImagesComponent implements OnInit, OnDestroy {
   uploader: FileUploader = new FileUploader({
     url: URL,
     disableMultipart: true
@@ -20,6 +21,9 @@ export class ImagesComponent implements OnInit {
   user: any;
   socket: any;
   images = [];
+  sSub: Subscription;
+  uSub: Subscription;
+  gSub: Subscription;
 
   constructor(private usersService: UsersService, private tokenService: TokenService) {
     this.socket = io('http://localhost:3000');
@@ -34,8 +38,14 @@ export class ImagesComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.sSub.unsubscribe();
+    this.uSub.unsubscribe();
+    this.gSub.unsubscribe();
+  }
+
   GetUser() {
-    this.usersService.GetUserById(this.user._id).subscribe(data => {
+    this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.images = data.result.images;
     }, err => console.log(err));
   }
@@ -66,7 +76,7 @@ export class ImagesComponent implements OnInit {
 
   Upload() {
     if(this.selectedFile) {
-      this.usersService.AddImage(this.selectedFile).subscribe(data => {
+      this.uSub = this.usersService.AddImage(this.selectedFile).subscribe(data => {
         this.socket.emit('refresh', {});
         const filePath = <HTMLInputElement>document.getElementById('filePath');
         filePath.value = '';
@@ -77,7 +87,7 @@ export class ImagesComponent implements OnInit {
   }
 
   SetProfileImage(img) {
-    this.usersService.SetDefaultImage(img.imgId, img.imgVersion).subscribe(data => {
+    this.sSub = this.usersService.SetDefaultImage(img.imgId, img.imgVersion).subscribe(data => {
       this.socket.emit('refresh', {});
     }, err => console.log(err));
   }

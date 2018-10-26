@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PostService } from 'src/app/services/post.service';
+import { PostService } from '../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import io from 'socket.io-client';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
@@ -17,6 +18,8 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   postId: any;
   post: string;
   commentsArray = [];
+  aSub: Subscription;
+  gSub: Subscription;
 
   constructor(private fb: FormBuilder, private postService: PostService, private route: ActivatedRoute) {
     this.socket = io('http://localhost:3000')
@@ -39,6 +42,8 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.toolbarElement.style.display = 'block';
+    this.gSub.unsubscribe();
+    this.aSub.unsubscribe();
   }
 
   init() {
@@ -52,14 +57,14 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   AddComment() {
-    this.postService.addComment(this.postId, this.commentForm.value.comment).subscribe(data => {
+    this.aSub = this.postService.addComment(this.postId, this.commentForm.value.comment).subscribe(data => {
       this.socket.emit('refresh', {});
       this.commentForm.reset();
     }, err => console.log(err));
   }
 
   GetPost() {
-    this.postService.getPost(this.postId).subscribe(data => {
+    this.gSub = this.postService.getPost(this.postId).subscribe(data => {
       this.post = data.post.post;
       this.commentsArray = data.post.comments.reverse();
       console.log(this.commentsArray);

@@ -30,7 +30,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabElement.style.display = 'block';
   }
 
-  online(event) {
-    this.onlineUsersArr = event;
-  }
+  // online(event) {
+  //   this.onlineUsersArr = event;
+  // }
 }
