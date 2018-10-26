@@ -42,8 +42,14 @@ export class CommentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.toolbarElement.style.display = 'block';
-    this.gSub.unsubscribe();
-    this.aSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
+    if(this.aSub) {
+      this.aSub.unsubscribe();
+    }
+
   }
 
   init() {

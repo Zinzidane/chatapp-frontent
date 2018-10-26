@@ -65,10 +65,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mSub.unsubscribe();
-    this.markSub.unsubscribe();
-    this.markAllSub.unsubscribe();
-    this.gSub.unsubscribe();
+    if(this.mSub) {
+      this.mSub.unsubscribe();
+    }
+
+    if(this.markSub) {
+      this.markSub.unsubscribe();
+    }
+
+    if(this.markAllSub) {
+      this.markAllSub.unsubscribe();
+    }
+
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
   }
 
   // ngAfterViewInit() {

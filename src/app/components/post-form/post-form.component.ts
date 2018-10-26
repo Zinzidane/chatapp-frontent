@@ -20,7 +20,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
   socket: any;
   postForm: FormGroup;
   selectedFile: any;
-  sSub: Subscription;
+  submitSub: Subscription;
 
   constructor(private fb: FormBuilder, private postService: PostService) {
     this.socket = io('http://localhost:3000');
@@ -31,7 +31,9 @@ export class PostFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sSub.unsubscribe();
+    if(this.submitSub) {
+      this.submitSub.unsubscribe();
+    }
   }
 
   init() {
@@ -52,7 +54,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
         image: this.selectedFile
       };
     }
-    this.sSub = this.postService.addPost(body).subscribe(data => {
+    this.submitSub = this.postService.addPost(body).subscribe(data => {
       this.socket.emit('refresh', {data: 'mess0'});
       this.postForm.reset();
     });

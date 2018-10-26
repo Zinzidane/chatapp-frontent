@@ -30,8 +30,14 @@ export class FollowingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gSub.unsubscribe();
-    this.uSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
+    if(this.uSub) {
+      this.uSub.unsubscribe();
+    }
+
   }
 
   GetUser() {

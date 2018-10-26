@@ -39,9 +39,18 @@ export class ImagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sSub.unsubscribe();
-    this.uSub.unsubscribe();
-    this.gSub.unsubscribe();
+    if(this.sSub) {
+      this.sSub.unsubscribe();
+    }
+
+    if(this.uSub) {
+      this.uSub.unsubscribe();
+    }
+
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
   }
 
   GetUser() {

@@ -28,7 +28,9 @@ export class FollowersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
   }
 
   GetUser() {

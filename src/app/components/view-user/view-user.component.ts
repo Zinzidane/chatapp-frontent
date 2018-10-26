@@ -44,7 +44,10 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.tabElement.style.display = 'block';
-    this.gSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
   }
 
   GetUserData(name) {

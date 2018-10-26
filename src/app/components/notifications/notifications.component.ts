@@ -31,15 +31,23 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gSub.unsubscribe();
-    this.mSub.unsubscribe();
-    this.dSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
+    if(this.mSub) {
+      this.mSub.unsubscribe();
+    }
+
+    if(this.dSub) {
+      this.dSub.unsubscribe();
+    }
+
   }
 
   GetUser() {
     this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.notifications = data.result.notifications.reverse();
-      console.log(this.notifications);
     });
   }
 

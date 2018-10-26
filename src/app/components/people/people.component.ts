@@ -44,10 +44,22 @@ export class PeopleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.getUserSub.unsubscribe();
-    this.getUsersSub.unsubscribe();
-    this.fSub.unsubscribe();
-    this.vSub.unsubscribe();
+    if(this.getUserSub) {
+      this.getUserSub.unsubscribe();
+    }
+
+    if(this.getUsersSub) {
+      this.getUsersSub.unsubscribe();
+    }
+
+    if(this.fSub) {
+      this.fSub.unsubscribe();
+    }
+
+    if(this.vSub) {
+      this.vSub.unsubscribe();
+    }
+
   }
 
   GetUsers() {

@@ -33,8 +33,14 @@ export class TopStreamsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.aSub.unsubscribe();
-    this.lSub.unsubscribe();
+    if(this.aSub) {
+      this.aSub.unsubscribe();
+    }
+
+    if(this.lSub) {
+      this.lSub.unsubscribe();
+    }
+
   }
 
   AllPosts() {

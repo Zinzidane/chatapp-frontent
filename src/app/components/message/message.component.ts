@@ -101,9 +101,18 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   }
 
   ngOnDestroy() {
-    this.gSub.unsubscribe();
-    this.getMessagesSub.unsubscribe();
-    this.sendMessageSub.unsubscribe();
+    if(this.gSub) {
+      this.gSub.unsubscribe();
+    }
+
+    if(this.getMessagesSub) {
+      this.getMessagesSub.unsubscribe();
+    }
+
+    if(this.sendMessageSub) {
+      this.sendMessageSub.unsubscribe();
+    }
+
   }
 
 

@@ -23,7 +23,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sSub.unsubscribe();
+    if(this.sSub) {
+      this.sSub.unsubscribe();
+    }
   }
 
   init() {
@@ -37,19 +39,19 @@ export class SignupComponent implements OnInit, OnDestroy {
   signupUser() {
     this.showSpinner = true;
     this.sSub = this.authService.registerUser(this.signupForm.value).subscribe(data => {
-      this.tokenService.SetToken(data.token);
-      this.signupForm.reset();
-      this.router.navigate(['streams']);
-    }, err => {
-      this.showSpinner = false;
-      if(err.error.msg) {
-        this.errorMessage = err.error.msg[0].message
-      }
+        this.tokenService.SetToken(data.token);
+        this.signupForm.reset();
+        this.router.navigate(['streams']);
+      }, err => {
+        this.showSpinner = false;
+        if(err.error.msg) {
+          this.errorMessage = err.error.msg[0].message
+        }
 
-      if(err.error.message) {
-        this.errorMessage = err.error.message;
-      }
-    });
+        if(err.error.message) {
+          this.errorMessage = err.error.message;
+        }
+      });
   }
 
 }

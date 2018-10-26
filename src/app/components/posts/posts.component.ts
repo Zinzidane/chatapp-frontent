@@ -39,8 +39,13 @@ export class PostsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.pSub.unsubscribe();
-    this.lSub.unsubscribe();
+    if(this.pSub) {
+      this.pSub.unsubscribe();
+    }
+
+    if(this.lSub) {
+      this.lSub.unsubscribe();
+    }
   }
 
   AllPosts() {
