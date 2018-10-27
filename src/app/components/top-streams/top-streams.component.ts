@@ -7,15 +7,22 @@ import io from 'socket.io-client';
 import _ from 'lodash';
 import { Subscription } from 'rxjs';
 
+const STEP = 3;
+
 @Component({
   selector: 'app-top-streams',
   templateUrl: './top-streams.component.html',
   styleUrls: ['./top-streams.component.css']
 })
 export class TopStreamsComponent implements OnInit, OnDestroy {
-  topPosts: any;
+  topPosts = [];
   socket: any;
   user: any;
+  offset = 0;
+  limit = STEP;
+  loading = false;
+  reloading = false;
+  noMorePosts = false;
   aSub: Subscription;
   lSub: Subscription;
 
@@ -44,14 +51,30 @@ export class TopStreamsComponent implements OnInit, OnDestroy {
   }
 
   AllPosts() {
-    this.aSub = this.postService.getAllPosts().subscribe(data => {
-      this.topPosts = data.top;
+    this.reloading = true;
+    this.loading = true;
+    const params = {
+      offset: this.offset,
+      limit: this.limit
+    };
+    this.aSub = this.postService.getAllPosts(params).subscribe(data => {
+      this.loading = false;
+      this.reloading = false;
+      this.topPosts = this.topPosts.concat(data.top);
+      this.noMorePosts = data.top.length < STEP;
     }, err => {
       if(err.error.token === null) {
+        this.loading = false;
+        this.reloading = false;
         this.tokenService.DeleteToken();
         this.router.navigate(['']);
       }
     });
+  }
+
+  LoadMore() {
+    this.offset += STEP;
+    this.AllPosts();
   }
 
   TimeFromNow(time) {

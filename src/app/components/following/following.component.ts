@@ -15,6 +15,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
   user: any;
   gSub: Subscription;
   uSub: Subscription;
+  loading = false;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -41,9 +42,12 @@ export class FollowingComponent implements OnInit, OnDestroy {
   }
 
   GetUser() {
+    this.loading = true;
     this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
-      this.following = data.result.following;
+        this.following = data.result.following;
+        this.loading = false;
     }, err => {
+      this.loading = false;
       console.log(err);
     });
   }

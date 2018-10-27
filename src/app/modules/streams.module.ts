@@ -5,7 +5,7 @@ import { StreamsComponent } from '../components/streams/streams.component';
 import { TokenService } from '../services/token.service';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { SideComponent } from '../components/side/side.component';
-import { PostFormComponent } from '../components/post-form/post-form.component';
+// import { PostFormComponent } from '../components/post-form/post-form.component';
 import { PostsComponent } from '../components/posts/posts.component';
 import { PostService } from '../services/post.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ import { ImagesComponent } from '../components/images/images.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ViewUserComponent } from '../components/view-user/view-user.component';
 import { ChangePasswordComponent } from '../components/change-password/change-password.component';
+import { LoaderComponent } from '../components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import { ChangePasswordComponent } from '../components/change-password/change-pa
     StreamsComponent,
     ToolbarComponent,
     SideComponent,
-    PostFormComponent,
+    // PostFormComponent,
     PostsComponent,
     CommentsComponent,
     PeopleComponent,
@@ -54,7 +55,8 @@ import { ChangePasswordComponent } from '../components/change-password/change-pa
     MessageComponent,
     ImagesComponent,
     ViewUserComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    LoaderComponent
   ],
   exports: [StreamsComponent, ToolbarComponent],
   providers: [TokenService, PostService, UsersService, MessageService]

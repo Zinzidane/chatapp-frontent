@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
   tabElement: any;
+  sideElement: any;
   postsTab = false;
   followingTab = false;
   followersTab = false;
@@ -31,6 +32,7 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
     const tabs = document.querySelector('.tabs');
     M.Tabs.init(tabs, {});
     this.tabElement = document.querySelector('.nav-content');
+    this.sideElement = document.querySelector('.sideDiv');
 
     this.route.params.subscribe(params => {
       this.name = params.name;
@@ -40,10 +42,12 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.tabElement.style.display = 'none';
+    this.sideElement.style.display = 'none';
   }
 
   ngOnDestroy() {
     this.tabElement.style.display = 'block';
+    this.sideElement.style.display = 'block';
     if(this.gSub) {
       this.gSub.unsubscribe();
     }
@@ -52,7 +56,8 @@ export class ViewUserComponent implements OnInit, AfterViewInit, OnDestroy {
 
   GetUserData(name) {
     this.gSub = this.usersService.GetUserByName(name).subscribe(data => {
-
+      console.log(data.result);
+      this.user = data.result;
       this.posts = data.result.posts.reverse();
       this.followers = data.result.followers;
       this.following = data.result.following;

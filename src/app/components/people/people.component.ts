@@ -21,6 +21,7 @@ export class PeopleComponent implements OnInit, AfterViewInit, OnDestroy {
   getUsersSub: Subscription;
   fSub: Subscription;
   vSub: Subscription;
+  loading = false;
 
   constructor(private userService: UsersService, private tokenService: TokenService, private router: Router) {
     this.socket = io('http://localhost:3000');
@@ -63,16 +64,26 @@ export class PeopleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   GetUsers() {
+    this.loading = true;
     this.getUsersSub = this.userService.GetAllUsers().subscribe(data => {
       _.remove(data.result, {username: this.loggedInUser.username});
       this.users = data.result;
-    }, err => console.log(err));
+      this.loading = false;
+    }, err => {
+      this.loading = false;
+      console.log(err);
+    });
   }
 
   GetUser() {
+    this.loading = true;
     this.getUserSub = this.userService.GetUserById(this.loggedInUser._id).subscribe(data => {
       this.userArr = data.result.following;
-    }, err => console.log(err));
+      this.loading = false;
+    }, err => {
+      this.loading = false;
+      console.log(err);
+    });
   }
 
   FollowUser(user) {

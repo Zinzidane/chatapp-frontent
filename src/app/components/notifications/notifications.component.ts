@@ -17,6 +17,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   gSub: Subscription;
   mSub: Subscription;
   dSub: Subscription;
+  loading = false;
 
   constructor(private tokenService: TokenService, private usersService: UsersService) {
     this.socket = io('http://localhost:3000');
@@ -46,8 +47,12 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
   GetUser() {
+    this.loading = true;
     this.gSub = this.usersService.GetUserById(this.user._id).subscribe(data => {
       this.notifications = data.result.notifications.reverse();
+      this.loading = false;
+    }, err => {
+      this.loading = false;
     });
   }
 

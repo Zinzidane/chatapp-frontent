@@ -1,11 +1,11 @@
 .button {
-  background: none !important;
-  border: none !important;
+  background: none;
+  border: none;
   height: 10px;
 }
 
 .liked {
-  color: #64b5f6 !important;
+  color: #64b5f6;
 }
 
 .title {
@@ -31,28 +31,58 @@
 }
 
 .postImage {
-  width: 100% !important;
-  margin: 0 auto !important;
-  left: 20px !important;
-  top: 10px !important;
+  width: 100%;
+  margin: 0 auto;
+  left: 20px;
+  top: 10px;
 }
 
 .card-image {
   width: 200px;
-  height: auto !important;
+  height: auto;
 }
 
 .active {
-  width: 350px !important;
-  height: 350px !important;
-  border-radius: none !important;
-  margin: -150px 0px 0px 120px !important;
+  width: 350px;
+  height: 350px;
+  border-radius: none;
+  margin: -150px 0px 0px 120px;
 }
 
 .collection {
-  border: none !important;
+  border: none;
 }
 
 .collection-item {
-  border: none !important;
+  border: none;
+}
+
+.postDiv {
+  background-color: #64b5f6 !important;
+}
+
+form {
+  background-color: #fff;
+}
+
+.formDiv {
+  margin: 0 20px 0 20px;
+}
+
+.addImageBtn {
+  margin-bottom: 5px;
+}
+
+.postBtn {
+  float: right;
+  margin-bottom: 5px;
+  margin-top: 1rem;
+  height: 3rem;
+  line-height: 3rem;
+}
+
+
+
+.file-field input[type="file"] {
+  width: 70%;
 }

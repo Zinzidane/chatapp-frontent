@@ -27,6 +27,7 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   gSub: Subscription;
   getMessagesSub: Subscription;
   sendMessageSub: Subscription;
+  sideDivElement: any;
 
   eventMock;
   eventPosMock;
@@ -54,6 +55,8 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   ngOnInit() {
     this.user = this.tokenService.GetPayload();
 
+    this.sideDivElement = document.querySelector('.sideDiv');
+
     this.route.params.subscribe(params => {
       this.receiver = params.name;
       this.GetUserByUsername(this.receiver);
@@ -64,14 +67,18 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       });
 
       this.socket.on('is_typing', data => {
+        console.log(data.sender, this.receiver);
         if(data.sender === this.receiver) {
           this.typing = true;
+          console.log(this.typing, 'typing');
         }
       });
 
       this.socket.on('has_stopped_typing', data => {
+        console.log(data.sender, this.receiver);
         if(data.sender === this.receiver) {
           this.typing = false;
+          console.log(this.typing, 'typing');
         }
       });
     });
@@ -82,6 +89,8 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       room1: this.user.username,
       room2: this.receiver
     };
+
+    this.sideDivElement.style.display = 'none';
 
     this.socket.emit('join_chat', params);
   }
@@ -113,6 +122,7 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       this.sendMessageSub.unsubscribe();
     }
 
+    this.sideDivElement.style.display = 'block';
   }
 
 
@@ -139,11 +149,14 @@ export class MessageComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     }
   }
 
+  // Check this method
   IsTyping() {
-    this.socket.on('start_typing', {
+    this.socket.emit('start_typing', {
       sender: this.user.username,
       receiver: this.receiver
     });
+
+    console.log(this.receiver);
 
     if(this.typingMessage) {
       clearTimeout(this.typingMessage);
